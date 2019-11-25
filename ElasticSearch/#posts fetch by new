@@ -1,0 +1,318 @@
+#new
+GET posts/_search
+{
+  "query": {
+    "function_score": {
+      "query": {
+        "bool": {
+          "must_not": [
+            {
+              "ids": {
+                "values": ["time_522d2b7e-626b-45d8-ad64-50aac71a24d4"]
+              }
+            }
+            ],
+          "filter": [
+            {
+            "geo_distance" : {
+                  "distance" : 50,
+                  "unit": "km",
+                  "attachments.location" : {
+                      "lat" : 37.87565446462284,
+                      "lon" : -122.25861433904828
+                  }
+              }
+            },
+            {
+              "term": {
+                "active": true
+              }
+            },
+            {
+              "range": {
+                "createdAt": {
+                  "gte": "now-365d/d",
+                  "lte": "now/d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "functions": [
+        {
+          
+          "script_score" : {
+                "script" : {
+                  "lang": "painless",
+                  "source": "(doc['createdAt'].date.getMillis() / (double)((new Date().getTime()) +  86400000))"
+                }
+            }, 
+            "weight": 0.75
+        },
+        {
+          "exp": {
+            "attachments.location": {
+              "origin": {
+                "lat": 37.87565446462284,
+                "lon": -122.25861433904828
+              },
+              "scale": "25km",
+              "decay": 0.9999
+            }
+          }, 
+          "weight": 0.25
+        }
+      ],
+      "boost_mode":"replace",
+      "score_mode": "avg"
+    }
+  },
+  "size": 1100,
+  "from": 0
+}
+
+
+#explore
+GET posts/_search
+{
+  "query": {
+    "function_score": {
+      "query": {
+        "bool": {
+          "must_not": [
+          {
+              "geo_distance": {
+                "distance": 100,
+                "unit": "km",
+                "attachments.location": {
+                  "lat": 37.87565446462284,
+                  "lon": -122.25861433904828
+                }
+              }
+          },
+          {
+              "ids": {
+                "values": ["time_522d2b7e-626b-45d8-ad64-50aac71a24d4"]
+              }
+          }
+          ],
+          "filter": [
+            {
+              "term": {
+                "active": true
+              }
+            },
+            {
+              "range": {
+                "createdAt": {
+                  "gte": "now-30d/d",
+                  "lte": "now/d"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sort": {
+    "_script": {
+      "type": "number",
+      "order" : "desc",
+      "script" : {
+          "lang": "painless",
+          "params": {
+            "absoluteCreationMillis": 0,
+            "redditConstant": 45000.0
+          }, 
+          "source": "(double)((((double)(Math.signum(doc['voteScore'].value))) * Math.log10(Math.max(Math.abs(doc['voteScore'].value),1))) + ((((int)(Math.round(((double)(doc['createdAt'].date.getMillis())) / 1000.0))) - params.absoluteCreationMillis) / params.redditConstant))"
+        }
+      }
+    },
+  "size": 20,
+  "from": 0
+}
+
+#by value
+GET posts/_search
+{
+  "query": {
+    "function_score": {
+      "query": {
+        "bool": {
+          "must_not": [
+            {
+              "ids": {
+                "values": ["time_522d2b7e-626b-45d8-ad64-50aac71a24d4"]
+              }
+            }
+            ],
+          "filter": [
+            {
+            "geo_distance" : {
+                  "distance" : 50,
+                  "unit": "km",
+                  "attachments.location" : {
+                      "lat" : 37.87565446462284,
+                      "lon" : -122.25861433904828
+                  }
+              }
+            },
+            {
+              "term": {
+                "active": true
+              }
+            },
+            {
+              "range": {
+                "createdAt": {
+                  "gte": "now-365d/d",
+                  "lte": "now/d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "functions": [
+        {
+          "script_score" : {
+              
+                "script" : {
+                  "lang": "painless",
+                  "params": {
+                    "absoluteCreationMillis": 0,
+                    "redditConstant": 45000.0
+                  }, 
+                  "source": "(double)((((double)(Math.signum(doc['voteScore'].value))) * Math.log10(Math.max(Math.abs(doc['voteScore'].value),1))) + ((((int)(Math.round(((double)(doc['createdAt'].date.getMillis())) / 1000.0))) - params.absoluteCreationMillis) / params.redditConstant))"
+                }
+            }, 
+            "weight": 1
+        },
+        {
+          "exp": {
+            "attachments.location": {
+              "origin": {
+                "lat": 37.871918,
+                "lon": -122.260463
+              },
+              "scale": "25km",
+              "decay": 0.99999
+            }
+          }, 
+          "weight": 1
+        }
+      ],
+      "boost_mode":"replace",
+      "score_mode": "multiply"
+    }
+  },
+  "size": 20,
+  "from": 0
+}
+
+#by vote score
+GET posts/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "geo_distance": {
+          "distance": 50,
+          "unit": "km",
+          "attachments.location": {
+            "lat": 37.87565446462284,
+            "lon": -122.25861433904828
+          }
+        }
+      }
+    }
+  }, 
+  "sort": 
+    {
+      "voteScore": {
+        "order": "desc"
+      }
+    }, 
+  "size": 20
+}
+
+#########################################
+
+#vote posts
+GET posts/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": [
+        {
+          "geo_distance": {
+            "distance": 5,
+            "unit": "km",
+            "attachments.location": {
+              "lat": 37.87565446462284,
+              "lon": -122.25861433904828
+            }
+          }
+        },
+        {
+          "range": {
+                "createdAt": {
+              "gte": "now-5d/d",
+              "lte": "now/d"
+            }
+          }
+        }
+      ]
+    }
+  }, 
+  "sort": 
+    {
+      "createdAt": {
+        "order": "desc"
+      }
+    }, 
+  "size": 20
+}
+
+
+#update value posts
+{
+  "query": {
+    "range": {
+      "createdAt": {
+        "gte": "now-5d/d",
+        "lte": "now/d"
+      }
+    }
+  },
+  "sort": 
+    {
+      "createdAt": {
+        "order": "desc"
+      }
+    }  
+}
+
+
+
+@@@@@@@@@@@@@@@@
+GET college-info/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+          {"function_score": {"query": {"bool": {"must": {"match_all": {}}}}, "functions": [{"linear": {"location": {"origin": "dr5ru", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 388}, {"linear": {"location": {"origin": "dr5rh", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 170}, {"linear": {"location": {"origin": "9q8yy", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 136}, {"linear": {"location": {"origin": "dr5rv", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 92}, {"linear": {"location": {"origin": "dr5rs", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 91}, {"linear": {"location": {"origin": "dr5re", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 89}, {"linear": {"location": {"origin": "9q9p3", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 88}, {"linear": {"location": {"origin": "9q5cu", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 88}, {"linear": {"location": {"origin": "dr73f", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 82}, {"linear": {"location": {"origin": "9q5cs", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 71}, {"linear": {"location": {"origin": "9q5cg", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 71}, {"linear": {"location": {"origin": "dr72h", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 66}, {"linear": {"location": {"origin": "dr9ug", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 56}, {"linear": {"location": {"origin": "dr5rk", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 51}, {"linear": {"location": {"origin": "9qh61", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 48}, {"linear": {"location": {"origin": "9qc8p", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 43}, {"linear": {"location": {"origin": "9qh3u", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 42}, {"linear": {"location": {"origin": "dr72j", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 41}, {"linear": {"location": {"origin": "9q9p1", "scale": "2.45km", "offset": "0.0km", "decay": 0.5}}, "weight": 40}], "score_mode": "max"}},
+    {"function_score": {"query": {"bool": {"must": {"match_all": {}}}}, "functions": [{"exp": {"location": {"origin": {"lat": 37.65632, "lon": -122.455603}, "scale": "25km", "decay": 0.5}}, "weight": 388}], "score_mode": "avg"}}, 
+    {"bool": {"must": {"match_all": {}}, "filter": {"geo_shape": {"ccwpath": {"shape": {"type": "point", "coordinates": [-122.455603, 37.65642]}, "relation": "intersects"}}}, "boost": 777}}
+        ]
+    }
+  }
+}

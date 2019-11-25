@@ -1,0 +1,153 @@
+
+
+//}
+//{
+//    "version": 1.0,
+//    "staging": "production",
+//
+//    "elements": {
+//
+//
+//        "post": {
+//            "properties": {
+//                "type": "properties",
+//                "author": "6df5d073-67f9-43a6-b15e-8c6449ebaf18",
+//                "privacy": "public",
+//                "location": [37.871953, -122.278969]
+//            },
+//
+//            "video": [
+//            {
+//            "type": "video",
+//            "relationship": "post",
+//            "format": "segmented",
+//            "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+//            "bucket_key": "path/to/bucket",
+//            "meta": {
+//            "filesize": 304.2,
+//            "segments": 5,
+//            "volume": 0.0,
+//            "length": 11.562
+//            }
+//            }
+//            ],
+//            "image":
+//            [
+//            {
+//            "type": "image",
+//            "relationship": "post",
+//            "format": "camera",
+//            "bucket_key": "path/to/bucket",
+//            "post_id": "9ff0030b-ca0c-4c0c-8a8e-17f55e54725d",
+//            "meta": {
+//            "filesize": 102.5
+//            }
+//            },
+//            {
+//            "type": "image",
+//            "relationship": "child",
+//            "format": "voting",
+//            "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+//            "bucket_key": "path/to/bucket",
+//            "meta": {
+//            "filesize": 102.5
+//            }
+//            }
+//            ],
+//            "text": [
+//            {
+//            "type": "text",
+//            "relationship": "child",
+//            "format": "caption",
+//            "message": "this is a caption with tags [hashtag:yo] and [hashtag:skeet] meta tags [metatag:[feature_request:I want better searches]] and [metatag:[feedback:Your app is good]] and [usertag:c108a4f4-ab2f-4706-92a0-82ee3740735a]",
+//            "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+//            "meta": {
+//            "num_chars": 142,
+//            "hashtag": [
+//            "yo",
+//            "skeet"
+//            ],
+//            "metatag": {
+//            "feature_requests": ["I want better searches"],
+//            "feedback": ["Your app is good"]
+//            },
+//            "usertag": [
+//            "c108a4f4-ab2f-4706-92a0-82ee3740735a"
+//            ]
+//            }
+//            },
+//            {
+//            "type": "text",
+//            "relationship": "child",
+//            "format": "voting",
+//            "message": "F respeks",
+//            "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+//
+//            "meta": {
+//            "num_chars": 9
+//            }
+//            },
+//            {
+//            "type": "text",
+//            "relationship": "child",
+//            "format": "inlay",
+//            "message": "this is text on the video",
+//            "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+//            "meta": {
+//            "num_chars": 25
+//            }
+//            },
+//            {
+//            "type": "text",
+//            "relationship": "child",
+//            "format": "inlay",
+//            "message": "this is text on the video",
+//            "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+//
+//            "meta": {
+//            "num_chars": 24
+//            }
+//            },
+//            {
+//            "type": "text",
+//            "relationship": "post",
+//            "format": "default",
+//            "message": "this is its own post",
+//            "post_id": "ca1c2318-a610-4268-98d3-87abca3c1a0d",
+//
+//            "meta": {
+//            "num_chars": 22
+//            }
+//            }
+//            ]
+//        }
+//    }
+//}
+
+
+
+//
+//let postProperties = UploadPostJson.PostProperties(author: "6df5d073-67f9-43a6-b15e-8c6449ebaf18", privacy: "public", location: [37.871953, -122.278969])
+//
+//
+//let postVideoEvent = UploadPostJson.VideoEvent(relationship: "0", style: "default", format: "mp4", post_id: "6187c073-c782-4b94-bc8c-e00f86508ed4", bucket_key: "[post_id]/video/[post_id]-[relationship]", meta: UploadPostJson.VideoMetaProperties(filesize: 3204.2, segments: 5, volume: nil, length: 11.53))
+//
+//let postImageEventList = [UploadPostJson.ImageEvent]()
+//let postImageMeta1 = UploadPostJson.ImageMetaProperties(filesize: 304.2)
+//let postImageEvent1 = UploadPostJson.ImageEvent(relationship: "0*0", style: "voting", format: "jpg", post_id: "6187c073-c782-4b94-bc8c-e00f86508ed4", bucket_key: "[post_id]/image/[post_id]-[relationship]", meta: UploadPostJson.ImageMetaProperties(filesize: 304.2))
+//
+//let postImageMeta2 = UploadPostJson.ImageMetaProperties(filesize: 202.2)
+//let postImageEvent2 = UploadPostJson.ImageEvent(relationship: "0", style: "default", format: "jpg", post_id: "5222c073-c782-4b94-bc8c-e00f86508gg9", bucket_key: "[post_id]/image/[post_id]-[relationship]", meta: postImageMeta2)
+//
+//let postTextMeta1 = UploadPostJson.TextMetaProperties(num_chars: 30, hashtag: nil, metatag: nil, usertag: nil)
+//let postTextEvent1 = UploadPostJson.TextEvent(relationship: "0*1", style: "caption", post_id: "6187c073-c782-4b94-bc8c-e00f86508ed4", meta: postTextMeta1)
+//
+//
+//
+//let postEvent = UploadPostJson.PostEvent(properties: postProperties, video: [postVideoEvent], image: [postImageEvent1, postImageEvent2], text: [postTextEvent1])
+//let finalPost = UploadPostJson(version: 1.0, staging: "production", elements: ["post": postEvent])
+//
+//let encodedData = try JSONEncoder().encode(finalPost)
+//print(String(data: encodedData, encoding: .utf8))
+
+

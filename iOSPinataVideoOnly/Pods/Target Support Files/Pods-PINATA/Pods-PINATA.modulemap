@@ -1,0 +1,6 @@
+framework module Pods_PINATA {
+  umbrella header "Pods-PINATA-umbrella.h"
+
+  export *
+  module * { export * }
+}

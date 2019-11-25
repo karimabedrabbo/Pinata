@@ -1,0 +1,554 @@
+#TABLES:
+
+#################################################################################################
+
+#Post TABLE:
+#ATTRIBUTES:
+#key: pId (post id)
+
+#b: cTp (used as control for event activity table, created timestamp)
+#c: eCd (used as control for event activity table, event code with random int 0-19 at end for querying hottest posts everywhere)
+#d: vlSr (used as control for event activity table, value of post based on voting or watch score tbd)
+#e: pkVlSr (peak value score)
+#f: acsCd (access code. options are DEL APV RJC RVW ADMRVW ADMAPV ADMRJC BAN)
+#g: rplSr (reply score)
+#h: shrSr (share score)
+#i: vtSr (vote score)
+#j: rpySr (replay score)
+
+#o: mTp (modified timestamp)
+#p: l10Id (level 10 cell)
+#q: l11Id (level 11 cell)
+#r: l12Id (level 12 cell)
+#s: l13Id (level 13 cell)
+#t: l14Id (level 14 cell)
+#u: l15Id (level 15 cell)
+#v: l16Id (level 16 cell)
+#v: lNm (belongs to location name if applicable)
+#v: lAls (belongs to location name if applicable)
+#v: ctyNm (belongs to location name if applicable)
+#w: uId (user posting id)
+#y: atchm (attachments: map)
+^^^^ (into attachments)
+#k: bktKy (bucket key)
+#k: msg (caption of video or message of text)
+#n: vtTyp (vote type assigned if applicable)
+#n: vtCnt (vote content assigned if applicable)
+
+
+#-----------------------------------------------------------------------------------------------
+#GSI1: 
+#description: query top posts of all time near this location. walk around and find 8 encompassing level 10 cells.
+#key: l10Id 
+#range: vtSr
+#-----------------------------------------------------------------------------------------------
+#GSI2: 
+#description: query top posts of all time near this location. walk around and find 8 encompassing level 10 cells.
+#key: lNm
+#range: vtSr
+#-----------------------------------------------------------------------------------------------
+
+#################################################################################################
+
+#EventActivity TABLE:
+#ATTRIBUTES:
+#key: eCdLId (EACH POST GETS 7 ENTRIES IN THIS TABLE for each level id, event code with no random int and level id)
+#range: cTp (created timestamp)
+
+#c: eCd (event code with random int 00-19)
+#d: vlSr (value score)
+#e: acsCd (access code. options are DEL APV RJC RVW ADMRVW ADMAPV ADMRJC)
+#f: pId (post id)
+#g: uId (poster user id)
+
+#GSI 1 and 2 are GSI's because 10GB DynamoDB limit on LSI item collections
+#-----------------------------------------------------------------------------------------------
+#GSI1: 
+#description: for moderators to approve posts in their area.
+#key: eCdLId 
+#range: acsCd
+#-----------------------------------------------------------------------------------------------
+#GSI2: 
+#description: find hottest posts in area.
+#key: eCdLId 
+#range: vlSr
+#-----------------------------------------------------------------------------------------------
+#GSI3: 
+#description: find hottest posts from everywhere.
+#key: eCd 
+#range: vlSr
+#-----------------------------------------------------------------------------------------------
+#GSI4: 
+#description: for me (as a single person) to approve stuff until I find moderators
+#key: eCd 
+#range: acsCd (includes both RVW and ADMRVW)
+#-----------------------------------------------------------------------------------------------
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#SIDENOTE:
+#To avoid hotkeys the following implementation is done to evaluate hottest posts everywhere
+#Chose a random int between 00-19 device side (could be more considering volume of posts). Lets say its 4.
+#
+#if there is no entry for "pstvid4"
+#query the eCd "pstvid4" and retrieve the posts sorted by value from the GSI index where pk: eCd and sk: valScr.
+#lets say the posts ranged from 2859 to 2798 add a new entry to the existing dictionary ["pstvid4": 2798]
+#
+#else:
+#check the lowest value score stored in the dictionary corresponding to entry "pstvid4". Lets say its currently [pstvid4": 2798, "pstvid6": 2445]
+#We then query "eCd" = "pstvid4" WHERE valScr < 2798 from the GSI index where pk: eCd and sk: valScr.
+#update the lowest score on the entry with the new results. Lets say results ranged from 2798 to 2668, the dictionary entry should be ["pstvid4": 2668, "pstvid6": 2445]
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+#################################################################################################
+
+#ChildEvent TABLE:
+#ATTRIBUTES:
+#Key: pId (post id)
+#Range: cTp (created timestamp)
+
+#c: vtSr (vote score)
+#d: acsCd (access code. options are DEL APV REJ RVW. default is APV for child)
+#e: cId (this child's id)
+#f: cTxt (child's text if applicable)
+#g: mTp (modified timestamp)
+#h: uId (posting user id)
+#k: bktKy (bucket key if applicable)
+
+
+#-----------------------------------------------------------------------------------------------
+#GSI1: 
+#description: find top
+#key: pId 
+#range: vtSr
+#-----------------------------------------------------------------------------------------------
+#GSI2: 
+#description: find specific child.
+#key: cId 
+#-----------------------------------------------------------------------------------------------
+
+#################################################################################################
+
+#EdgeEvent TABLE:
+#key: eCdById (event code with NO random int and uId that authored event. ex: pstlikby#id or pstrplby#id)
+#range: cTp (created timestamp)
+
+#c: abtId (id, event code implicit in eCdById key)
+#d: eCdFrId (for uId)
+#e: lId (level 16 cell of user when action was preformed)
+
+#-----------------------------------------------------------------------------------------------
+#GSI1: 
+#description: find if a user has done a specific action on a post
+#key: eCdById 
+#range: abtId 
+#-----------------------------------------------------------------------------------------------
+#GSI2: 
+#description: if you want to evaluate relationships between users
+#this is what you use.
+#key: eCdById 
+#range: eCdFrId 
+#-----------------------------------------------------------------------------------------------
+#GSI3: 
+#description: used to evaluate counts about what happens for a specific user
+#key: eCdFrId
+#range: cTp (created timestamp)
+
+#################################################################################################
+
+#Streams running on this table
+
+#Notification Table:
+#Key: uId (the user id to be notified)
+#Range: cTp
+
+#c: nfTxt (notification text)
+#d: eCdAbtId (the id that the event corresponds to)
+
+
+#################################################################################################
+#EventTrack Table:
+#Key: eCdId (with randint 00-19)
+#Range: dt (year-month-day-hour)
+
+#################################################################################################
+
+#Location Table:
+#Key: rnd
+#Range: lId
+
+#b: gb (geoblocked)
+#c: hrDsy (hourly density)
+#d: wkDsy (week density)
+#d: dyDsy (daily density)
+#e: mthDsy (month density)
+#g: lNm (location name)
+#g: lAls (location alias)
+#g: ctyNm (appx name of city)
+#h: rnd (random integer 00-19)
+
+#-----------------------------------------------------------------------------------------------
+#LSI1: 
+#description: evaluate popular areas by hour
+#key: rnd
+#range: hrDsy
+#-----------------------------------------------------------------------------------------------
+#LSI2: 
+#description: evaluate popular areas by month
+#key: rnd
+#range: wkDsy
+#-----------------------------------------------------------------------------------------------
+#LSI3: 
+#description: evaluate popular areas by month
+#key: rnd
+#range: mthDsy
+#-----------------------------------------------------------------------------------------------
+#LSI3: 
+#description: location alias
+#key: rnd
+#range: lAls
+#-----------------------------------------------------------------------------------------------
+#LSI4: 
+#description: city name
+#key: rnd
+#range: ctyNm
+#-----------------------------------------------------------------------------------------------
+#GSI1: 
+#description: retrieve by location
+#key: lId
+
+
+#################################################################################################
+
+#User Table:
+#Key: uId
+
+#c: bnEnd (ban end timestamp)
+#d: ctryCd (country code)
+#e: usrnm (username)
+#f: phnNb (phone number)
+#g: krmaSr (karma score)
+#h: mTp (modified timestamp)
+#i: pswd (password)
+#j: pmL16Id (permanent location level 16)
+#k: pmLng (permanent longitude)
+#l: pmLat (permanent latitude)
+#j: pmLNm (permanent city name)
+#j: pmLNm (permanent campus name)
+#j: pmCmpAl (permanent campus alias)
+#n: bio (biography)
+#o: bDy (birthday)
+#o: nme (name)
+#o: pfBkKy (profile picture bucket key)
+#p: acsCdRInt (options are USR, MOD, ADM with random integer 00-19)
+#q: uOpts (user options: map)
+#r: uRpl (user replies list)
+#g: uPst (user posts list)
+#a: uRpst (user reposts list)
+#f: uStk (user stickers list)
+#g: lFlwCt (locations following count)
+#g: uFrdCt (users friend count)
+#h: uFrd (users friends list)
+#h: uFrdRqSt (users friend request sent)
+#h: uFrdRqRc (users friend request recieved)
+#g: lFlw (locations following list)
+#f: uBlk (user blocking list)
+#g: uTph (user trophies list)
+#g: rnd (0-19)
+
+#-----------------------------------------------------------------------------------------------
+#GSI1: 
+#description: retrieve user by phone number
+#key: phnNb
+#-----------------------------------------------------------------------------------------------
+#GSI2: 
+#description: retrieve user by user name
+#key: rnd
+#range: usrnm
+
+
+#LOGISTICS
+
+#FETCH STICKERS FOR LOCATION
+#FETCH RECENT POSTS FOR LOCATION (USER)
+#FETCH HOTTEST POSTS IN LOCATION (USER)
+#FETCH HOTTEST POSTS EVERYWHERE (USER)
+#FETCH POSTS FOR APPROVAL FOR LOCATION (MODERATOR)
+
+fetch_post = {
+    "version": 1.0,
+    "staging": "production",
+
+    "elements": {
+        
+        
+        "fetch": {
+            "properties" {
+                "location": {
+                    "longitude": -122.278969,
+                    "latitude": 37.871953,
+                },
+                "timestamp": 1540648412680,
+                "authored_by": "6df5d073-67f9-43a6-b15e-8c6449ebaf18",
+            },
+            "post": [
+                {
+                "filter": "hot"
+                "scope": "everyone"
+                "since_time" : 1540648332680 
+                }
+            ]
+        }
+    },
+}
+
+post_event = {
+    "api_version": 1.0,
+    "staging": "production",
+
+    "elements": {
+        
+
+        "post": {
+            "properties": {
+                "location": {
+                    "longitude": -122.278969,
+                    "latitude": 37.871953,
+                },
+                "timestamp": 1540648412680,
+                "authored_by": "6df5d073-67f9-43a6-b15e-8c6449ebaf18",
+                "privacy": "public",
+            },
+            "video": [
+                {     
+                    "type": "camera",
+                    "meta": {
+                        "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+                        "filesize": 3042.5,
+                        "segments": 5,
+                        "volume": 0,
+                        "bucket_key": "path/to/bucket",
+
+                    },
+                },
+            ],
+            "image": 
+            [
+                {
+                    "type": "voting",
+                    "meta": {
+                        "post_id": "c108a4f4-ab2f-4706-92a0-82ee3740735a",
+                        "filesize": 102.5,
+                        "bucket_key": "path/to/bucket",
+                    },
+                        
+                },
+            ],
+            "text": [
+                {
+                    "type": "caption",
+                    "message": "this is a caption with tags [hashtag:yo] and [hashtag:skeet] meta tags [metatag:[feature_request:I want better searches]] and [metatag:[feedback:Your app is good]] and [usertag:c108a4f4-ab2f-4706-92a0-82ee3740735a]"
+                },
+                {
+                    "type": "voting",
+                    "message": "F respeks",
+                },
+                {
+                    "type": "inlay",
+                    "message": "this is text on the video",
+                },
+                {
+                    "type": "inlay",
+                    "message": "this is text on the video",
+                },
+            ],
+        },
+    },
+}
+
+reply_postsamecallasabove = {
+    "api_version": 1.0,
+    "staging": "production",
+
+    "elements": {
+        "reply": {
+            
+            "text": {
+                "type": "response"
+                "message": "this is a caption with tags [hashtag:yo] and [hashtag:skeet] meta tags [metatag:[feature_request:I want better searches]] and [metatag:[feedback:Your app is good]] and [usertag:c108a4f4-ab2f-4706-92a0-82ee3740735a],
+            }
+            "image": {
+                "type": "gif"
+                "meta" {
+                    "post_id": "c108a4f4-ab2f-4706-92a0-82ee3740735a",
+                    "filesize": 102.5,
+                    "bucket_key": "path/to/bucket",
+                },
+            }
+            
+            "properties": {
+                "timestamp": 1540648412680,
+                "authored_by": "6df5d073-67f9-43a6-b15e-8c6449ebaf18",
+                "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+                "post_user_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+                "location": {
+                    "longitude": -122.278969,
+                    "latitude": 37.871953,
+                },
+            },
+        }    
+    }
+}
+
+modify_event = {
+    "api_version": 1.0,
+    "staging": "production",
+    "elements": {
+        "changes": {
+            "properties": {
+                    "timestamp": 1540648412680,
+                    "authored_by": "6df5d073-67f9-43a6-b15e-8c6449ebaf18",
+                    "post_id": "6187c073-c782-4b94-bc8c-e00f86508ed4",
+                    "post_user_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+                    "location": {
+                        "longitude": -122.278969,
+                        "latitude": 37.871953,
+                    },
+            },
+            "reply": {
+                "text": {
+                    "message": "this is a caption with tags [hashtag:yo] and [hashtag:skeet] meta tags [metatag:[feature_request:I want better searches]] and [metatag:[feedback:Your app is good]] and [usertag:c108a4f4-ab2f-4706-92a0-82ee3740735a],
+                }
+                "image": {
+                    "type": "gif"
+                    "meta" {
+                        "post_id": "c108a4f4-ab2f-4706-92a0-82ee3740735a",
+                        "filesize": 102.5,
+                        "bucket_key": "path/to/bucket",
+                    },
+                }
+            }
+        }
+    }
+}
+
+#DELETE POST AND BLOCK USER AND BAN USER ALSO IN THIS CATEGORY
+
+action_event = {
+    "api_version": 1.0,
+    "staging": "production",
+    "elements": {
+        "action": {
+            "properties": {
+                "timestamp": 1540648412680,
+                "authored_by": "6df5d073-67f9-43a6-b15e-8c6449ebaf18",
+                "location": {
+                    "longitude": -122.278969,
+                    "latitude": 37.871953,
+                },
+            },
+            "delete": 
+            {
+                "type": "post",
+                "about_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+            }
+            "report":
+            {
+                "type": "sticker",
+                "about_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+                "for_user_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+            },
+            "upvote":
+            {
+                "type": "post",
+                "about_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+                "for_user_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+            },
+            "follow":
+            {
+                "type": "user",
+                "about_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+            }
+            "block":
+            {
+                "type": "user",
+                "about_id": "6187c073-c782-4b94-bc8c-e00f86508ed4"
+
+            } 
+        }
+    }
+}
+    
+    #search shit
+
+
+#DELETE POST
+#MODIFY POST
+#CREATE POST
+#REPLY TO POST
+#UPVOTE POST
+#UPVOTE REPLY
+#CREATE REPLY
+
+#SEARCH FOR CAMPUS
+#SEARCH FOR USER
+
+
+
+#SEARCH FOR LOCATION (INCLUDING RETURNING FOLLOWED LOCATIONS)
+
+#CREATE USER
+#REPORT USER 
+#FOLLOW USER
+
+#REPOST POST
+#FETCH NOTIFICATIONS
+#FETCH PERSONAL REPLYS
+#FETCH PERSONAL POSTS
+#FETCH PERSONAL STICKERS
+#FETCH LOCATION DETAILS
+#BLOCK USER
+#FOLLOW LOCATION
+#FETCH USER DETAILS
+#FOLLOW USER
+#DELETE ACCOUNT
+#LOGOUT
+#FETCH PRIVACY POLICY
+#FETCH TERMS OF USE
+
+
+
+#Fetching POST:
+
+#1. check if user is banned:
+
+# calculate level 10-16 locations:
+# check if location exists:
+# if doesnt exist:
+# calculate distance from closest campus
+# if location level is blocked:
+# return geoblocked error
+# else
+# pull out densities
+# compute radius to search from density
+# parrallel query cells
+# 
+
+#6. check if location level is banned
+#. check if location is geoblocked
+
+#3: 
+#3: Add the post to the post table with event code "PSTVID" and apv code "RVW" (review) with appropriate attributes below:
+#4: 
+
+#################################################################################################
+
+#DELETE POST:
+#2: Add the post to the event activity table (entry for each location level)
+
+
+
+#3: ADD THE POST 
+
+
+#each post i need t

@@ -1,0 +1,542 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		472316AF2383FD0E001851A9 /* CameraGestureListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472316AE2383FD0E001851A9 /* CameraGestureListener.swift */; };
+		472316B12383FE0B001851A9 /* CameraLogicManagerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472316B02383FE0B001851A9 /* CameraLogicManagerRepresentable.swift */; };
+		472316B32383FF4F001851A9 /* CameraButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472316B22383FF4F001851A9 /* CameraButtonsView.swift */; };
+		472316B52383FF72001851A9 /* CameraRecordingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472316B42383FF72001851A9 /* CameraRecordingButtonView.swift */; };
+		472316B723840314001851A9 /* CameraProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472316B623840314001851A9 /* CameraProgressBarView.swift */; };
+		472316B9238403D1001851A9 /* CameraLogicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472316B8238403D1001851A9 /* CameraLogicManager.swift */; };
+		47693742238AA65A004C3AF6 /* OldCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47693741238AA65A004C3AF6 /* OldCameraViewController.swift */; };
+		47E312422383D8BC0067712B /* CameraGestureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E312412383D8BC0067712B /* CameraGestureView.swift */; };
+		830C84AA3CBC955C88471987 /* Pods_PINATA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E06166E9F712831C380C4F2 /* Pods_PINATA.framework */; };
+		8A22528121C3566400A1E37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A22528021C3566400A1E37D /* Main.storyboard */; };
+		8A58826C21831FDD001CC668 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881F121831FDD001CC668 /* CanvasView.swift */; };
+		8A58826E21831FDD001CC668 /* StickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881F321831FDD001CC668 /* StickersViewController.swift */; };
+		8A58826F21831FDD001CC668 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881F421831FDD001CC668 /* EmojiCollectionViewCell.swift */; };
+		8A58827021831FDD001CC668 /* EmojisCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881F521831FDD001CC668 /* EmojisCollectionViewDelegate.swift */; };
+		8A58827321831FDD001CC668 /* StickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881F821831FDD001CC668 /* StickerCollectionViewCell.swift */; };
+		8A58827421831FDD001CC668 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881F921831FDD001CC668 /* VideoPlayerViewController.swift */; };
+		8A58827521831FDD001CC668 /* FocusIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881FB21831FDD001CC668 /* FocusIndicatorView.swift */; };
+		8A58827721831FDD001CC668 /* NewCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881FD21831FDD001CC668 /* NewCameraViewController.swift */; };
+		8A58827821831FDD001CC668 /* SCRecordSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5881FE21831FDD001CC668 /* SCRecordSessionManager.swift */; };
+		8A58829421831FDD001CC668 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A58821D21831FDD001CC668 /* AppDelegate.swift */; };
+		8A58829D21831FDD001CC668 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A58822821831FDD001CC668 /* Extensions.swift */; };
+		8AAD81EA21831E210034E086 /* PINATA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AAD81E821831E210034E086 /* PINATA.xcdatamodeld */; };
+		8AAD81EC21831E220034E086 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AAD81EB21831E220034E086 /* Assets.xcassets */; };
+		8AAD81EF21831E220034E086 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AAD81ED21831E220034E086 /* LaunchScreen.storyboard */; };
+		8AE6350621A1FA1F0000E9FE /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE6350521A1FA1F0000E9FE /* ColorCollectionViewCell.swift */; };
+		8AE6350821A1FA340000E9FE /* ColorCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE6350721A1FA340000E9FE /* ColorCollectionViewDelegate.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0BFE784757D8596D4B4A363C /* Pods-PINATA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PINATA.release.xcconfig"; path = "Pods/Target Support Files/Pods-PINATA/Pods-PINATA.release.xcconfig"; sourceTree = "<group>"; };
+		472316AE2383FD0E001851A9 /* CameraGestureListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraGestureListener.swift; sourceTree = "<group>"; };
+		472316B02383FE0B001851A9 /* CameraLogicManagerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraLogicManagerRepresentable.swift; sourceTree = "<group>"; };
+		472316B22383FF4F001851A9 /* CameraButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraButtonsView.swift; sourceTree = "<group>"; };
+		472316B42383FF72001851A9 /* CameraRecordingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecordingButtonView.swift; sourceTree = "<group>"; };
+		472316B623840314001851A9 /* CameraProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraProgressBarView.swift; sourceTree = "<group>"; };
+		472316B8238403D1001851A9 /* CameraLogicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraLogicManager.swift; sourceTree = "<group>"; };
+		47693741238AA65A004C3AF6 /* OldCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldCameraViewController.swift; sourceTree = "<group>"; };
+		47E312412383D8BC0067712B /* CameraGestureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraGestureView.swift; sourceTree = "<group>"; };
+		4E06166E9F712831C380C4F2 /* Pods_PINATA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PINATA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A22528021C3566400A1E37D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		8A5881F121831FDD001CC668 /* CanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		8A5881F321831FDD001CC668 /* StickersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersViewController.swift; sourceTree = "<group>"; };
+		8A5881F421831FDD001CC668 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
+		8A5881F521831FDD001CC668 /* EmojisCollectionViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojisCollectionViewDelegate.swift; sourceTree = "<group>"; };
+		8A5881F821831FDD001CC668 /* StickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerCollectionViewCell.swift; sourceTree = "<group>"; };
+		8A5881F921831FDD001CC668 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
+		8A5881FB21831FDD001CC668 /* FocusIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusIndicatorView.swift; sourceTree = "<group>"; };
+		8A5881FD21831FDD001CC668 /* NewCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCameraViewController.swift; sourceTree = "<group>"; };
+		8A5881FE21831FDD001CC668 /* SCRecordSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCRecordSessionManager.swift; sourceTree = "<group>"; };
+		8A58821D21831FDD001CC668 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8A58822821831FDD001CC668 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		8AAD81DE21831E210034E086 /* PINATA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PINATA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AAD81E921831E210034E086 /* PINATA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PINATA.xcdatamodel; sourceTree = "<group>"; };
+		8AAD81EB21831E220034E086 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8AAD81EE21831E220034E086 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8AAD81F021831E220034E086 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8AE6350521A1FA1F0000E9FE /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
+		8AE6350721A1FA340000E9FE /* ColorCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewDelegate.swift; sourceTree = "<group>"; };
+		CD4B712761D1714C01326E2D /* Pods-PINATA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PINATA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PINATA/Pods-PINATA.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8AAD81DB21831E210034E086 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				830C84AA3CBC955C88471987 /* Pods_PINATA.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		448D6D24E2FE2FE7A925186A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4E06166E9F712831C380C4F2 /* Pods_PINATA.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		472316AD2383FCFA001851A9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				472316AE2383FD0E001851A9 /* CameraGestureListener.swift */,
+				472316B02383FE0B001851A9 /* CameraLogicManagerRepresentable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8A58819021831FDD001CC668 /* PINATA */ = {
+			isa = PBXGroup;
+			children = (
+				8A5881EF21831FDD001CC668 /* VideoEditor */,
+				8A5881FA21831FDD001CC668 /* Camera */,
+				8A58822521831FDD001CC668 /* Helpers */,
+			);
+			name = PINATA;
+			sourceTree = "<group>";
+		};
+		8A5881EF21831FDD001CC668 /* VideoEditor */ = {
+			isa = PBXGroup;
+			children = (
+				8A5881F121831FDD001CC668 /* CanvasView.swift */,
+				8AE6350521A1FA1F0000E9FE /* ColorCollectionViewCell.swift */,
+				8A5881F321831FDD001CC668 /* StickersViewController.swift */,
+				8AE6350721A1FA340000E9FE /* ColorCollectionViewDelegate.swift */,
+				8A5881F421831FDD001CC668 /* EmojiCollectionViewCell.swift */,
+				8A5881F521831FDD001CC668 /* EmojisCollectionViewDelegate.swift */,
+				8A5881F821831FDD001CC668 /* StickerCollectionViewCell.swift */,
+				8A5881F921831FDD001CC668 /* VideoPlayerViewController.swift */,
+			);
+			path = VideoEditor;
+			sourceTree = "<group>";
+		};
+		8A5881FA21831FDD001CC668 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				472316AD2383FCFA001851A9 /* Protocols */,
+				8A5881FB21831FDD001CC668 /* FocusIndicatorView.swift */,
+				472316B623840314001851A9 /* CameraProgressBarView.swift */,
+				47693741238AA65A004C3AF6 /* OldCameraViewController.swift */,
+				472316B22383FF4F001851A9 /* CameraButtonsView.swift */,
+				472316B8238403D1001851A9 /* CameraLogicManager.swift */,
+				472316B42383FF72001851A9 /* CameraRecordingButtonView.swift */,
+				8A5881FD21831FDD001CC668 /* NewCameraViewController.swift */,
+				47E312412383D8BC0067712B /* CameraGestureView.swift */,
+				8A5881FE21831FDD001CC668 /* SCRecordSessionManager.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		8A58822521831FDD001CC668 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8A58822821831FDD001CC668 /* Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		8AAD81D521831E200034E086 = {
+			isa = PBXGroup;
+			children = (
+				8AAD81E021831E210034E086 /* PINATA */,
+				8AAD81DF21831E210034E086 /* Products */,
+				CAA85F896392A33A64C3B5E3 /* Pods */,
+				448D6D24E2FE2FE7A925186A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8AAD81DF21831E210034E086 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8AAD81DE21831E210034E086 /* PINATA.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8AAD81E021831E210034E086 /* PINATA */ = {
+			isa = PBXGroup;
+			children = (
+				8A58819021831FDD001CC668 /* PINATA */,
+				8AAD81ED21831E220034E086 /* LaunchScreen.storyboard */,
+				8AAD81EB21831E220034E086 /* Assets.xcassets */,
+				8A22528021C3566400A1E37D /* Main.storyboard */,
+				8A58821D21831FDD001CC668 /* AppDelegate.swift */,
+				8AAD81F021831E220034E086 /* Info.plist */,
+				8AAD81E821831E210034E086 /* PINATA.xcdatamodeld */,
+			);
+			path = PINATA;
+			sourceTree = "<group>";
+		};
+		CAA85F896392A33A64C3B5E3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CD4B712761D1714C01326E2D /* Pods-PINATA.debug.xcconfig */,
+				0BFE784757D8596D4B4A363C /* Pods-PINATA.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8AAD81DD21831E210034E086 /* PINATA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AAD81F321831E220034E086 /* Build configuration list for PBXNativeTarget "PINATA" */;
+			buildPhases = (
+				D05EDC13B27EAFE6084D0892 /* [CP] Check Pods Manifest.lock */,
+				8AAD81DA21831E210034E086 /* Sources */,
+				8AAD81DB21831E210034E086 /* Frameworks */,
+				8AAD81DC21831E210034E086 /* Resources */,
+				C7706256B4CE975F86ABC82F /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PINATA;
+			productName = PINATA;
+			productReference = 8AAD81DE21831E210034E086 /* PINATA.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8AAD81D621831E200034E086 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = "Karim Abedrabbo";
+				TargetAttributes = {
+					8AAD81DD21831E210034E086 = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
+					};
+				};
+			};
+			buildConfigurationList = 8AAD81D921831E200034E086 /* Build configuration list for PBXProject "PINATA" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8AAD81D521831E200034E086;
+			productRefGroup = 8AAD81DF21831E210034E086 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8AAD81DD21831E210034E086 /* PINATA */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8AAD81DC21831E210034E086 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A22528121C3566400A1E37D /* Main.storyboard in Resources */,
+				8AAD81EF21831E220034E086 /* LaunchScreen.storyboard in Resources */,
+				8AAD81EC21831E220034E086 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C7706256B4CE975F86ABC82F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PINATA/Pods-PINATA-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PINATA/Pods-PINATA-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PINATA/Pods-PINATA-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D05EDC13B27EAFE6084D0892 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PINATA-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8AAD81DA21831E210034E086 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AE6350821A1FA340000E9FE /* ColorCollectionViewDelegate.swift in Sources */,
+				8A58827321831FDD001CC668 /* StickerCollectionViewCell.swift in Sources */,
+				8A58827521831FDD001CC668 /* FocusIndicatorView.swift in Sources */,
+				47693742238AA65A004C3AF6 /* OldCameraViewController.swift in Sources */,
+				8A58826C21831FDD001CC668 /* CanvasView.swift in Sources */,
+				8A58827721831FDD001CC668 /* NewCameraViewController.swift in Sources */,
+				472316B12383FE0B001851A9 /* CameraLogicManagerRepresentable.swift in Sources */,
+				47E312422383D8BC0067712B /* CameraGestureView.swift in Sources */,
+				472316B32383FF4F001851A9 /* CameraButtonsView.swift in Sources */,
+				472316B9238403D1001851A9 /* CameraLogicManager.swift in Sources */,
+				8A58829421831FDD001CC668 /* AppDelegate.swift in Sources */,
+				8A58827421831FDD001CC668 /* VideoPlayerViewController.swift in Sources */,
+				472316B52383FF72001851A9 /* CameraRecordingButtonView.swift in Sources */,
+				8A58827021831FDD001CC668 /* EmojisCollectionViewDelegate.swift in Sources */,
+				472316B723840314001851A9 /* CameraProgressBarView.swift in Sources */,
+				8A58826F21831FDD001CC668 /* EmojiCollectionViewCell.swift in Sources */,
+				8A58826E21831FDD001CC668 /* StickersViewController.swift in Sources */,
+				472316AF2383FD0E001851A9 /* CameraGestureListener.swift in Sources */,
+				8AAD81EA21831E210034E086 /* PINATA.xcdatamodeld in Sources */,
+				8A58827821831FDD001CC668 /* SCRecordSessionManager.swift in Sources */,
+				8A58829D21831FDD001CC668 /* Extensions.swift in Sources */,
+				8AE6350621A1FA1F0000E9FE /* ColorCollectionViewCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8AAD81ED21831E220034E086 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AAD81EE21831E220034E086 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8AAD81F121831E220034E086 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8AAD81F221831E220034E086 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8AAD81F421831E220034E086 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD4B712761D1714C01326E2D /* Pods-PINATA.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 87XT499AA8;
+				INFOPLIST_FILE = PINATA/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = sample.Karim.PINATA;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8AAD81F521831E220034E086 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BFE784757D8596D4B4A363C /* Pods-PINATA.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 87XT499AA8;
+				INFOPLIST_FILE = PINATA/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = sample.Karim.PINATA;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8AAD81D921831E200034E086 /* Build configuration list for PBXProject "PINATA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AAD81F121831E220034E086 /* Debug */,
+				8AAD81F221831E220034E086 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AAD81F321831E220034E086 /* Build configuration list for PBXNativeTarget "PINATA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AAD81F421831E220034E086 /* Debug */,
+				8AAD81F521831E220034E086 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8AAD81E821831E210034E086 /* PINATA.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8AAD81E921831E210034E086 /* PINATA.xcdatamodel */,
+			);
+			currentVersion = 8AAD81E921831E210034E086 /* PINATA.xcdatamodel */;
+			path = PINATA.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 8AAD81D621831E200034E086 /* Project object */;
+}
