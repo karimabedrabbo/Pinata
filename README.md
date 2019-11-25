@@ -5,15 +5,9 @@ Pinata is an anonymous video social network for college-campuses. Included in th
 It supports clips, photos, importing media, deleting segments, and customizable add-ons like text, drawings, and stickers. 
 
 Here's a demo gif
+
 ![Alt text](./SamplePhotos/demoCampus.gif "Berkeley Campus Demo Video Recorder")
 
-Here's a meme of my doggo
-![Alt text](./SamplePhotos/meme.jpg "Doggo meme")
+Here's a few other samples + a meme of my doggo
 
-A few other samples in case the gif doesn't load
-![Alt text](./SamplePhotos/recordingProcess.jpg "Sample recording screen")
-
-![Alt text](./SamplePhotos/sampleStickerDrawing.jpg "Sample sticker and drawing")
-
-![Alt text](./SamplePhotos/sampleText.jpg "Sample text")
-
+![Alt text](./SamplePhotos/sampleMossaic.jpg "Sample Mossaic")
