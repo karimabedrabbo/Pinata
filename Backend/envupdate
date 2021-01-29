@@ -1,0 +1,6 @@
+#!/bin/sh
+APP_KUBE_ENV_SECRET=eyo-server-env
+ENV_CONFIG=./.env
+
+kubectl delete secret $APP_KUBE_ENV_SECRET
+kubectl create secret generic $APP_KUBE_ENV_SECRET --from-env-file=$ENV_CONFIG

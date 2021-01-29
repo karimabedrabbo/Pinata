@@ -1,0 +1,202 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+  labels:
+    app: redis
+    tier: backend
+    role: master
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
+    tier: backend
+    role: master
+---
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis-master
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+        tier: backend
+    spec:
+      containers:
+      - name: master
+        image: redis  # or just image: redis
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+  labels:
+    app: redis
+    tier: backend
+    role: slave
+spec:
+  ports:
+  - port: 6379
+  selector:
+    app: redis
+    tier: backend
+    role: slave
+---
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis-slave
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: slave
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: slave
+        tier: backend
+    spec:
+      containers:
+      - name: slave
+        image: k8s.gcr.io/redis-slave:v2
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+          # If your cluster config does not include a dns service, then to
+          # instead access an environment variable to find the master
+          # service's host, comment out the 'value: dns' line above, and
+          # uncomment the line below:
+          # value: env
+        ports:
+        - containerPort: 6379
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cloudsqlproxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cloudsqlproxy
+    spec:
+      containers:
+       # Make sure to specify image tag in production
+       # Check out the newest version in release page
+       # https://github.com/GoogleCloudPlatform/cloudsql-proxy/releases
+      - image: gcr.io/cloudsql-docker/gce-proxy:latest
+       # 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
+        imagePullPolicy: Always
+        name: cloudsqlproxy
+        command:
+        - /cloud_sql_proxy
+        - -dir=/cloudsql
+        - -instances=eyoapp-1:us-west1:eyodb=tcp:0.0.0.0:5432
+        - -credential_file=/credentials/credentials.json
+        ports:
+        - name: port-eyodb
+          containerPort: 5432
+        volumeMounts:
+        - mountPath: /cloudsql
+          name: cloudsql
+        - mountPath: /credentials
+          name: service-account-token
+      volumes:
+      - name: cloudsql
+        emptyDir:
+      - name: service-account-token
+        secret:
+          secretName: service-account-token
+---
+#BEGIN_COMMENT_BLOCK
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudsqlproxy-service
+spec:
+  ports:
+  - port: 5432
+    targetPort: port-eyodb
+  selector:
+    app: cloudsqlproxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: eyo-server
+    tier: backend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: eyo-server
+    tier: backend
+---
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: eyo-server
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: eyo-server
+        tier: backend
+    spec:
+      containers:
+      - name: eyo-server
+        image: us.gcr.io/eyoapp-1/eyo-server:latest
+        envFrom:
+        - secretRef:
+            name: eyo-server-env
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        # env:
+        # - name: GET_HOSTS_FROM
+        #   value: dns
+          # If your cluster config does not include a dns service, then to
+          # instead access environment variables to find service host
+          # info, comment out the 'value: dns' line above, and uncomment the
+          # line below:
+          # value: env
+        ports:
+        - containerPort: 80
+#END_COMMENT_BLOCK
+---

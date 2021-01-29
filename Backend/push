@@ -1,0 +1,43 @@
+#!/bin/sh
+
+######################################
+# KUBERNETES SHOULD BE RUNNING
+######################################
+
+#config
+KUBE_CONFIG=./all.yaml;
+BEGIN_MARKER='BEGIN_COMMENT_BLOCK'
+END_MARKER='END_COMMENT_BLOCK'
+DOCKER_BUILD_LABEL=eyobuild;
+GCLOUD_REGISTRY=us.gcr.io/eyoapp-1/eyo-server:latest;
+
+#some internal variables
+I_BEGIN_MARKER="/${BEGIN_MARKER}/"
+I_END_MARKER="/${END_MARKER}/"
+I_COMMENT_BLOCK="/${BEGIN_MARKER}/,/${END_MARKER}/"
+
+#MARK BEGIN SCRIPT
+#clean any potential comment residue on KUBE_CONFIG file
+for i in {1..5}
+do
+  ./uncomment $I_COMMENT_BLOCK $KUBE_CONFIG;
+done
+
+#clean previous build
+./comment $I_COMMENT_BLOCK $KUBE_CONFIG;
+kubectl apply -f $KUBE_CONFIG --prune --all;
+./envupdate
+docker system prune -a -f --filter label=$DOCKER_BUILD_LABEL;
+echo "Y" | gcloud container images delete $GCLOUD_REGISTRY --force-delete-tags;
+
+#push new build
+docker build -t $GCLOUD_REGISTRY .;
+docker push $GCLOUD_REGISTRY;
+
+#init new build on kubernetes
+./uncomment $I_COMMENT_BLOCK $KUBE_CONFIG;
+./comment $I_BEGIN_MARKER $KUBE_CONFIG; #recomment the begin marker
+./comment $I_END_MARKER $KUBE_CONFIG; #recomment the end marker
+
+kubectl apply -f $KUBE_CONFIG --prune --all;
+
